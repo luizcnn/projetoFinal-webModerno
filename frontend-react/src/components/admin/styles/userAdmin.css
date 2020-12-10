@@ -1,0 +1,11 @@
+.table-buttons-container {
+    flex-wrap: wrap;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.table-buttons-container button {
+    margin: 0px 5px;
+}

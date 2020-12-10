@@ -1,0 +1,16 @@
+.page-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.page-title .title {
+    margin: 0;
+    font-size: 2.0rem;
+    color: #000;
+}
+.page-title .subtitle {
+    color: #777;
+    margin: 5px 0px;
+    font-size: 1.3rem;
+}

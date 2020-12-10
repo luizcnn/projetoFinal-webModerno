@@ -1,0 +1,10 @@
+.admin-pages-tab {
+    background-color: #FFF;
+    border-radius: 5px;
+    padding: 20px;
+    border: solid 1px #cecece;
+}
+
+.admin-pages-tab nav {
+    margin-bottom: 10px;
+}
