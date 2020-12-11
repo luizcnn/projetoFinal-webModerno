@@ -10,7 +10,7 @@ import './styles/userAdmin.css'
 import 'react-toastify/dist/ReactToastify.css';
 
 interface User {
-    id: number
+    id?: number
     name: string
     email: string
     admin: boolean
@@ -21,7 +21,6 @@ interface User {
 function UserAdmin() {
     const [saveModeToggle, setSaveModeToggle] = useState(true)
     const defaultUser = {
-        id: 0,
         name: '',
         email: '',
         admin: false,
@@ -31,6 +30,7 @@ function UserAdmin() {
     
     const [user, setUser] = useState<User>({ ...defaultUser })
     const [users, setUsers] = useState([])
+    const [id, setId] = useState(0)
 
     function resetForm() {
         setUser({ ...defaultUser })
@@ -40,8 +40,8 @@ function UserAdmin() {
 
     function saveUser() {
          
-        const idForm = user.id !== 0 ? `/${user.id}` : ''
-        const method = user.id !==0 ? 'put' : 'post'
+        const idForm = id !== 0 ? `/${id}` : ''
+        const method = id !== 0 ? 'put' : 'post'
 
         api[method](`users${idForm}`, user)
             .then(() => {
@@ -49,6 +49,7 @@ function UserAdmin() {
             }).catch((error) => {
                 if(error.response) {
                     notifyError(error.response.data)
+                    return
                 }
             })
         
@@ -57,12 +58,13 @@ function UserAdmin() {
     }
 
     function removeUser() {
-        api.delete(`users/${user.id}`)
+        api.delete(`users/${id}`)
             .then(() => {
                 notifySuccess("Remoção realizada com sucesso")
             }).catch((error) => {
                 if(error.response) {
                     notifyError(error.response.data)
+                    return
                 }
             })
         
@@ -71,8 +73,8 @@ function UserAdmin() {
 
     function loadUser(user: User, saveMode = true) {
         setSaveModeToggle(saveMode);
+        if(user.id) setId(user.id)
         setUser({
-            id: user.id,
             name: user.name,
             email: user.email,
             admin: user.admin,
@@ -98,7 +100,7 @@ function UserAdmin() {
             <Form onSubmit={(e) => {
                 e.preventDefault()
             }}>
-                <input id="article-id" type="hidden" name="article-id" value={user.id}/>
+                <input id="article-id" type="hidden" name="article-id" value={id}/>
                 <Form.Row>
                     <Col sm={12} md={6}>
                         <Form.Group controlId="form-name">
