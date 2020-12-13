@@ -26,14 +26,27 @@
 .menu .menu-filter svg {
     color: #AAA;
     margin-right: 10px;
-    
+    height: 100%;
 }
 
-.menu input {
+.menu .menu-filter input {
     color: #CCC;
     font-size: 1.3rem;
     border: 0;
     outline: 0;
-    width: 100%;
+    width: 70%;
     background: transparent;
+}
+
+.menu .tree ul {
+    margin: 5px 10px;
+    color: #FFF;
+}
+
+.menu .tree ul[selected="true"] {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.MuiTreeItem-root.Mui-selected > .MuiTreeItem-content .MuiTreeItem-label:hover, .MuiTreeItem-root.Mui-selected:focus > .MuiTreeItem-content .MuiTreeItem-label {
+    background-color: rgba(255, 255, 255, 0.2);
 }

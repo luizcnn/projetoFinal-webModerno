@@ -1,6 +1,8 @@
 import React from 'react'
 import { FaSearch } from 'react-icons/fa'
 
+import Tree from './Tree'
+
 import './styles/menu.css'
 
 interface MenuProps {
@@ -8,6 +10,7 @@ interface MenuProps {
 }
 
 const Menu: React.FC<MenuProps> = ({ isMenuVisible }) => {
+
     return (
         <>
             {isMenuVisible && 
@@ -21,9 +24,7 @@ const Menu: React.FC<MenuProps> = ({ isMenuVisible }) => {
                         />
                     </div>
                     <div className="tree">
-                        <a href="/">Item 1</a>
-                        <br />
-                        <a href="/">Item 2</a>
+                        <Tree />
                     </div>
                 </aside>}
         </>
