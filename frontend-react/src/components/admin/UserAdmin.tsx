@@ -100,10 +100,10 @@ function UserAdmin() {
             <Form onSubmit={(e) => {
                 e.preventDefault()
             }}>
-                <input id="article-id" type="hidden" name="article-id" value={id}/>
+                <input id="user-id" type="hidden" name="user-id" value={id}/>
                 <Form.Row>
                     <Col sm={12} md={6}>
-                        <Form.Group controlId="form-name">
+                        <Form.Group controlId="form-user-name">
                             <Form.Label>Nome: </Form.Label>
                             <Form.Control 
                                 type="text" 
@@ -115,7 +115,7 @@ function UserAdmin() {
                         </Form.Group>
                     </Col>
                     <Col sm={12} md={6}>
-                    <Form.Group controlId="form-email">
+                    <Form.Group controlId="form-user-email">
                         <Form.Label>E-mail: </Form.Label>
                         <Form.Control 
                             type="email" 

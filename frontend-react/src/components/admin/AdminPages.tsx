@@ -4,9 +4,11 @@ import { FaCogs } from 'react-icons/fa';
 import Landing from '../template/Landing';
 
 import PageTitle from '../template/PageTitle';
+import UserAdmin from './UserAdmin';
+import CategoryAdmin from './CategoryAdmin'
 
 import './styles/adminPages.css'
-import UserAdmin from './UserAdmin';
+
 
 function AdminPages() {
 
@@ -23,7 +25,7 @@ function AdminPages() {
                             Home content
                         </Tab>
                         <Tab eventKey="categories" title="Categorias">
-                            Profile content
+                            <CategoryAdmin />
                         </Tab>
                         <Tab eventKey="users" title="Usuários">
                             <UserAdmin />

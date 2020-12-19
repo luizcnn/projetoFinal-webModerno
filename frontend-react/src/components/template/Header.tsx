@@ -9,7 +9,6 @@ interface HeaderProps {
     title: string;
     handleHideMenu: Function
     hideMenu: boolean;
-    // hideUserDropdown: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({ title, hideMenu, handleHideMenu }) => {

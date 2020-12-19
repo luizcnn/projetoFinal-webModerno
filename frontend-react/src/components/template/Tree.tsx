@@ -23,24 +23,25 @@ const useStyles = makeStyles({
 
 export default function Tree() {
 
-  const [data, setData] = useState<RenderTree>()
+  const [data, setData] = useState<RenderTree[]>([])
 
   useEffect(() => {
     api.get('/categories/tree')
       .then(res => {
-        res.data.forEach((node: RenderTree) => {
-          setData({...node})
-        })
-        console.log(data)
+        setData([...res.data])
       })
   }, [data])
 
   const classes = useStyles();
 
-  const renderTree = (nodes: RenderTree) => (
-    <TreeItem key={nodes.id} nodeId={`${nodes.id}`} label={nodes.name}>
-      {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
-    </TreeItem>
+  const renderTree = (nodes: RenderTree[]) => (
+    nodes.map((node: RenderTree) => {
+      return (
+      <TreeItem key={node.id} nodeId={`${node.id}`} label={node.name}>
+        {Array.isArray(node.children) ? renderTree(node.children)  : null}
+      </TreeItem>
+      )
+    })
   );
 
   return (
