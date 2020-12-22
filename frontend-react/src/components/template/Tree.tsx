@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { FaChevronDown, FaChevronRight } from 'react-icons/fa'
 import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
+import axios from 'axios'
+
 import api from '../../services/api';
 
 interface RenderTree {
@@ -26,11 +28,30 @@ export default function Tree() {
   const [data, setData] = useState<RenderTree[]>([])
 
   useEffect(() => {
-    api.get('/categories/tree')
-      .then(res => {
-        setData([...res.data])
-      })
-  }, [data])
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
+    const loadTree = () => {
+      try {
+        api.get('/categories/tree', { cancelToken: source.token })
+        .then(res => {
+          setData([...res.data])
+        })
+      } catch(error) {
+        if(axios.isCancel(error)) {
+          console.log("Cancelado")
+        } else {
+          throw error
+        }
+      }
+    }
+
+    loadTree()
+    return () => {
+      source.cancel();
+    }
+
+  }, [])
 
   const classes = useStyles();
 

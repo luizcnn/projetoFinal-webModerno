@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {FaTrash, FaPen} from 'react-icons/fa'
 import { Button, Col, Form, Table } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
+import axios from 'axios'
 
 import api from '../../services/api';
 import { notifySuccess, notifyError } from '../../utils/toastify'
@@ -29,12 +30,11 @@ function UserAdmin() {
     }
     
     const [user, setUser] = useState<User>({ ...defaultUser })
-    const [users, setUsers] = useState([])
+    const [users, setUsers] = useState<User[]>([])
     const [id, setId] = useState(0)
 
     function resetForm() {
         setUser({ ...defaultUser })
-
         setSaveModeToggle(true)
     }
 
@@ -83,15 +83,29 @@ function UserAdmin() {
         })
     }
 
-    function loadUsers() {
-        api.get('/users')
-            .then(res => {
-                setUsers(res.data)
-            })
-    }
-
     useEffect(() => {
+        const CancelToken = axios.CancelToken;
+        const source = CancelToken.source();
+
+        const loadUsers = () => {
+            try {
+                api.get('/users', { cancelToken: source.token })
+                    .then(res => {
+                        setUsers(res.data)
+                    })
+            } catch (error) {
+                if(axios.isCancel(error)) {
+                    console.log("Cancelado")
+                } else {
+                    throw error;
+                }
+            }
+        }
+
         loadUsers()
+        return () => {
+            source.cancel();
+        }
     }, [users])
 
     return (

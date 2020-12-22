@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { FaHome, FaFolder, FaFileAlt, FaUser } from 'react-icons/fa'
 import Landing from '../template/Landing';
+import axios from 'axios'
 
 import PageTitle from '../template/PageTitle';
 import Stat from './Stat';
@@ -16,21 +17,41 @@ interface Stats {
 
 function Home() {
 
-    const [stats, setStats] = useState<Stats>()
-
-    function getStats() {
-        api.get('/stats')
-            .then(res => {
-                setStats({
-                    users: res.data.users,
-                    articles: res.data.articles,
-                    categories: res.data.categories
-                })
-            })
+    const statsDefault = {
+        users: 0,
+        articles: 0,
+        categories: 0
     }
+    const [stats, setStats] = useState<Stats>({ ...statsDefault })
 
     useEffect(() => {
-        getStats()
+
+        const CancelToken = axios.CancelToken;
+        const source = CancelToken.source();
+
+        const loadStats = () => {
+            try {
+                api.get('/stats', { cancelToken: source.token })
+                    .then(res => {
+                        setStats({
+                            users: res.data.users,
+                            categories: res.data.categories,
+                            articles: res.data.articles
+                        })
+                    })
+            } catch (error) {
+                if(axios.isCancel(error)) {
+                    console.log("Cancelado")
+                } else {
+                    throw error;
+                }
+            }
+        }
+
+        loadStats();
+        return () => {
+            source.cancel();
+        }
     }, [stats])
 
     return(

@@ -6,6 +6,7 @@ import Landing from '../template/Landing';
 import PageTitle from '../template/PageTitle';
 import UserAdmin from './UserAdmin';
 import CategoryAdmin from './CategoryAdmin'
+import ArticleAdmin from './ArticleAdmin';
 
 import './styles/adminPages.css'
 
@@ -22,7 +23,7 @@ function AdminPages() {
                 <div className="admin-pages-tab">
                     <Tabs defaultActiveKey="articles">
                         <Tab eventKey="articles" title="Artigos">
-                            Home content
+                            <ArticleAdmin />
                         </Tab>
                         <Tab eventKey="categories" title="Categorias">
                             <CategoryAdmin />
